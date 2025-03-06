@@ -12,9 +12,10 @@ interface CreateConfigOptions {
 
 export const createConfig = (options: CreateConfigOptions) => tsEslint.config(
     eslint.configs.recommended,
-    ...tsEslint.configs.strictTypeChecked,
-    ...tsEslint.configs.stylisticTypeChecked,
+    tsEslint.configs.strictTypeChecked,
+    tsEslint.configs.stylisticTypeChecked,
     {
+        name: "giqnt/ts-parser-options",
         languageOptions: {
             parserOptions: {
                 projectService: true,
@@ -24,7 +25,6 @@ export const createConfig = (options: CreateConfigOptions) => tsEslint.config(
     },
     stylisticPlugin.configs["disable-legacy"],
     stylisticPlugin.configs.customize({
-        flat: true,
         indent: 4,
         quotes: "double",
         semi: true,
@@ -35,40 +35,7 @@ export const createConfig = (options: CreateConfigOptions) => tsEslint.config(
         quoteProps: "consistent-as-needed",
     }),
     {
-        name: "giqnt/plugin/import-x",
-        plugins: {
-            "import-x": importXPlugin,
-        },
-        rules: {
-            "import-x/consistent-type-specifier-style": ["error", "prefer-top-level"],
-            "import-x/default": "error",
-            "import-x/export": "error",
-            "import-x/first": "error",
-            "import-x/named": "error",
-            "import-x/namespace": "error",
-            "import-x/newline-after-import": "error",
-            "import-x/no-duplicates": "error",
-            "import-x/no-empty-named-blocks": "error",
-            "import-x/no-mutable-exports": "error",
-            "import-x/no-named-as-default-member": "error",
-            "import-x/no-named-as-default": "error",
-            "import-x/no-named-default": "error",
-            "import-x/no-self-import": "error",
-            "import-x/no-webpack-loader-syntax": "error",
-            "import-x/order": ["error", { "newlines-between": "never" }],
-        },
-    },
-    {
-        name: "giqnt/plugin/unused-imports",
-        plugins: {
-            "unused-imports": unusedImportsPlugin,
-        },
-        rules: {
-            "unused-imports/no-unused-imports": "error",
-        },
-    },
-    {
-        name: "giqnt/overrides",
+        name: "giqnt/overrides/stylistic",
         rules: {
             "@stylistic/indent": ["error", 4, {
                 ArrayExpression: 1,
@@ -78,7 +45,6 @@ export const createConfig = (options: CreateConfigOptions) => tsEslint.config(
                 FunctionExpression: { body: 1, parameters: 1 },
                 ignoreComments: false,
                 ignoredNodes: [
-                    "TemplateLiteral *",
                     "TSUnionType",
                     "TSIntersectionType",
                     "TSTypeParameterInstantiation",
@@ -91,10 +57,38 @@ export const createConfig = (options: CreateConfigOptions) => tsEslint.config(
                 offsetTernaryExpressions: true,
                 outerIIFEBody: 1,
                 SwitchCase: 1,
+                tabLength: 4,
                 VariableDeclarator: 1,
             }],
-            // "@stylistic/linebreak-style": ["error", "unix"],
             "@stylistic/multiline-ternary": "off",
+        },
+    },
+    importXPlugin.flatConfigs.recommended,
+    importXPlugin.flatConfigs.typescript,
+    {
+        name: "giqnt/overrides/import-x",
+        rules: {
+            "import-x/consistent-type-specifier-style": ["error", "prefer-top-level"],
+            "import-x/first": "warn",
+            "import-x/newline-after-import": "warn",
+            "import-x/no-empty-named-blocks": "error",
+            "import-x/no-named-as-default-member": "off",
+            "import-x/no-self-import": "error",
+            "import-x/order": ["warn", { "newlines-between": "never" }],
+        },
+    },
+    {
+        name: "giqnt/plugin/unused-imports",
+        plugins: {
+            "unused-imports": unusedImportsPlugin,
+        },
+        rules: {
+            "unused-imports/no-unused-imports": "warn",
+        },
+    },
+    {
+        name: "giqnt/overrides",
+        rules: {
             "@typescript-eslint/consistent-type-imports": "error",
             "@typescript-eslint/no-import-type-side-effects": "error",
             "@typescript-eslint/no-non-null-assertion": "off",
