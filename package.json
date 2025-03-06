@@ -1,5 +1,5 @@
 {
-  "name": "djs-eslint-config",
+  "name": "@giqnt/eslint-config",
   "description": "ESLint config for my discord.js & Typescript projects",
   "version": "0.0.1",
   "main": "src/index.ts",
