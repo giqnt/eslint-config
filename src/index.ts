@@ -56,7 +56,7 @@ export const createConfig = (options: CreateConfigOptions) => tsEslint.config(
                 ImportDeclaration: 1,
                 MemberExpression: 1,
                 ObjectExpression: 1,
-                offsetTernaryExpressions: false,
+                offsetTernaryExpressions: true,
                 outerIIFEBody: 1,
                 SwitchCase: 1,
                 tabLength: 4,
