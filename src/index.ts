@@ -3,10 +3,12 @@ import importXPlugin from "eslint-plugin-import-x";
 import unusedImportsPlugin from "eslint-plugin-unused-imports";
 import eslint from "@eslint/js";
 import tsEslint from "typescript-eslint";
+import type { InfiniteDepthConfigWithExtends } from "typescript-eslint";
 import type { TSESLint } from "@typescript-eslint/utils";
 
 interface CreateConfigOptions {
     rootDir: string;
+    configs?: InfiniteDepthConfigWithExtends[];
     overrides?: TSESLint.FlatConfig.Rules;
 }
 
@@ -101,6 +103,7 @@ export const createConfig = (options: CreateConfigOptions) => tsEslint.config(
             "prefer-template": "error",
         },
     },
+    ...(options.configs ?? []),
     {
         name: "giqnt/custom",
         rules: options.overrides ?? {},
