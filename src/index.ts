@@ -13,7 +13,10 @@ interface CreateConfigOptions {
 }
 
 export const createConfig = (options: CreateConfigOptions) => tsEslint.config(
-    eslint.configs.recommended,
+    {
+        name: "eslint/recommended",
+        ...eslint.configs.recommended,
+    },
     tsEslint.configs.strictTypeChecked,
     tsEslint.configs.stylisticTypeChecked,
     {
@@ -25,19 +28,25 @@ export const createConfig = (options: CreateConfigOptions) => tsEslint.config(
             },
         },
     },
-    stylisticPlugin.configs["disable-legacy"],
-    stylisticPlugin.configs.customize({
-        indent: 4,
-        quotes: "double",
-        semi: true,
-        arrowParens: true,
-        blockSpacing: true,
-        braceStyle: "1tbs",
-        commaDangle: "always-multiline",
-        quoteProps: "consistent-as-needed",
-    }),
     {
-        name: "giqnt/overrides/stylistic",
+        ...stylisticPlugin.configs["disable-legacy"],
+        name: "giqnt/plugin/stylistic/disable-legacy",
+    },
+    {
+        ...stylisticPlugin.configs.customize({
+            indent: 4,
+            quotes: "double",
+            semi: true,
+            arrowParens: true,
+            blockSpacing: true,
+            braceStyle: "1tbs",
+            commaDangle: "always-multiline",
+            quoteProps: "consistent-as-needed",
+        }),
+        name: "giqnt/plugin/stylistic/customize",
+    },
+    {
+        name: "giqnt/plugin/stylistic/overrides",
         rules: {
             "@stylistic/indent": ["error", 4, {
                 ArrayExpression: 1,
@@ -65,10 +74,16 @@ export const createConfig = (options: CreateConfigOptions) => tsEslint.config(
             "@stylistic/multiline-ternary": "off",
         },
     },
-    importXPlugin.flatConfigs.recommended,
-    importXPlugin.flatConfigs.typescript,
     {
-        name: "giqnt/overrides/import-x",
+        ...importXPlugin.flatConfigs.recommended,
+        name: "giqnt/plugin/import-x/recommended",
+    },
+    {
+        ...importXPlugin.flatConfigs.typescript,
+        name: "giqnt/plugin/import-x/typescript",
+    },
+    {
+        name: "giqnt/plugin/import-x/overrides",
         rules: {
             "import-x/consistent-type-specifier-style": ["error", "prefer-top-level"],
             "import-x/first": "warn",
