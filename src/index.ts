@@ -110,6 +110,18 @@ export const createConfig = (options: CreateConfigOptions) => tsEslint.config(
             "@typescript-eslint/no-import-type-side-effects": "error",
             "@typescript-eslint/no-non-null-assertion": "off",
             "@typescript-eslint/no-unnecessary-type-parameters": "off",
+            "@typescript-eslint/no-unused-vars": [
+                "error",
+                {
+                    args: "all",
+                    argsIgnorePattern: "^_",
+                    caughtErrors: "all",
+                    caughtErrorsIgnorePattern: "^_",
+                    destructuredArrayIgnorePattern: "^_",
+                    varsIgnorePattern: "^_",
+                    ignoreRestSiblings: true,
+                },
+            ],
             "@typescript-eslint/restrict-template-expressions": ["error", { allowNumber: true }],
             "@typescript-eslint/strict-boolean-expressions": ["error", { allowNullableBoolean: true }],
             "eqeqeq": ["error", "smart"],
